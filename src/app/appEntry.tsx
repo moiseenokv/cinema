@@ -1,9 +1,11 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BaseLayout } from '@app/layouts/BaseLayout';
+import App from '@/App';
+import '@app/styles/reset.scss';
+import '@app/styles/common.scss';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BaseLayout />
+    <App />
   </StrictMode>,
 );
