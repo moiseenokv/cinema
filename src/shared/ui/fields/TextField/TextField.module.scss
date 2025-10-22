@@ -1,0 +1,51 @@
+.field {
+  display: grid;
+  gap: 6px;
+
+  &Label {
+    font-size: 12px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  &Hint {
+    font-size: 12px;
+    color: var(--danger);
+  }
+
+  /* контейнер для линии */
+  &Underlined {
+    display: grid;
+    gap: 6px;
+  }
+
+  /* сам input */
+  &Input {
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 8px 0;
+    font-size: 16px;
+    color: var(--text);
+
+    &::placeholder { color: var(--muted); }
+  }
+
+  /* линия под input */
+  &Line {
+    height: 1px;
+    background: var(--muted);
+  }
+
+  /* состояния */
+  &Error {
+    .fieldLabel { color: var(--danger); }
+    .fieldInput { color: var(--danger); }
+    .fieldLine  { background: var(--danger); }
+  }
+
+  &Focus {
+    .fieldLine { background: var(--text); }
+  }
+}

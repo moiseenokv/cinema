@@ -1,0 +1,28 @@
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &Button {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid transparent;
+    background: var(--primary);
+    color: #fff;
+    border-radius: var(--radius);
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover { opacity: .95; }
+    &:active { transform: translateY(1px); }
+
+    &:disabled {
+      background: #d8dee6;
+      color: #96a0ae;
+      cursor: default;
+      transform: none;
+    }
+  }
+
+  &Hint { font-size: 12px; color: var(--muted); }
+}
