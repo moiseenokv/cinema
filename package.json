@@ -7,13 +7,20 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
     "axios": "^1.12.2",
+    "formik": "^2.4.6",
+    "js-cookie": "^3.0.5",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-hot-toast": "^2.6.0",
     "react-router-dom": "^7.9.4",
+    "yup": "^1.7.1",
     "zustand": "^5.0.8"
   },
   "devDependencies": {
@@ -22,6 +29,7 @@
     "@stylistic/eslint-plugin": "^2.13.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^24.6.0",
     "@types/react": "^19.1.16",
     "@types/react-dom": "^19.1.9",
@@ -37,6 +45,7 @@
     "sass": "^1.93.2",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.1",
-    "vite": "^7.1.7"
+    "vite": "^7.1.7",
+    "vitest": "^4.0.1"
   }
 }
