@@ -1,0 +1,1 @@
+export function CinemasPage() { return <div>Кинотеатры</div>; }
