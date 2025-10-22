@@ -8,6 +8,8 @@ import { HomePage } from '@/pages/home/HomePage';
 import { FilmsPage } from '@/pages/films/FilmsPage';
 import { CinemasPage } from '@/pages/cinemas/CinemasPage';
 import { MyTicketsPage } from '@/pages/tickets/TicketsPage';
+import { AuthPage } from '@/pages/auth/AuthPage';
+import { RegisterPage } from '@/pages/register/RegisterPage';
 import { NotFoundPage } from '@/pages/notFound/NotFoundPage';
 
 export function getRoutes(): RouteObject[] {
@@ -18,6 +20,8 @@ export function getRoutes(): RouteObject[] {
         { path: routes.home, element: <HomePage /> },
         { path: routes.films, element: <FilmsPage /> },
         { path: routes.cinemas, element: <CinemasPage /> },
+        { path: routes.auth, element: <AuthPage /> },
+        { path: routes.register, element: <RegisterPage /> },
 
         {
           element: <ProtectedRoute />,

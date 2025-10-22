@@ -1,0 +1,22 @@
+.page {
+  width: min(480px, 100%);
+  display: grid;
+  gap: 24px;
+}
+
+.title {
+  margin: 0;
+  font-size: 34px;
+  line-height: 1.2;
+  font-weight: 800;
+}
+
+.form {
+  display: grid;
+  gap: 22px;
+
+  &Status {
+    font-size: 12px;
+    color: var(--danger);
+  }
+}
