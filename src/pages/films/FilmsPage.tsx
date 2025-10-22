@@ -1,0 +1,1 @@
+export function FilmsPage() { return <div>Фильмы</div>; }

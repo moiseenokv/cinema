@@ -1,0 +1,1 @@
+export function MyTicketsPage() { return <div>Мои билеты</div>; }
