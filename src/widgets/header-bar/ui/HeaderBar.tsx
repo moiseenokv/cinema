@@ -16,7 +16,7 @@ export function HeaderBar() {
       logout();
       navigate(routes.home);
     } else {
-      navigate(routes.films); //should be auth
+      navigate(routes.auth);
     }
   };
 
