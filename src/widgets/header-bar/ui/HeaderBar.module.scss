@@ -1,0 +1,54 @@
+.header {
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+  background: var(--header-bg, #fff);
+
+  &Row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  &Right {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+
+    &Nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      &Link {
+        text-decoration: none;
+        color: #333333;
+        font-weight: 500;
+        font-size: 18px;
+        cursor: pointer;
+        &:hover {
+            color: #383782;
+        }
+      }
+
+      &Divider {
+        opacity: 0.5;
+        user-select: none;
+        font-size: 24px;
+        color: #9DA88E;
+      }
+    }
+
+    &Button {
+      padding: 12px 24px;
+      border: none;
+      background: var(--btn-bg-primary);
+      border-radius: 6px;
+      color: var(--btn-color-primary, #000);
+      font-weight:500;
+      font-size: 18px;
+      cursor: pointer;
+
+      &:hover { opacity: 0.9; }
+    }
+  }
+}
