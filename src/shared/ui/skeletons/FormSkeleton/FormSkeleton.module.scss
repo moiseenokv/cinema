@@ -1,0 +1,24 @@
+.formSkeleton {
+  display: grid;
+  gap: 12px;
+
+  &Line {
+    height: 18px;
+    border-radius: 8px;
+    background: #eee;
+    width: 140px;
+  }
+
+  &Input {
+    height: 44px;
+    border-radius: 10px;
+    background: #eee;
+  }
+
+  &Actions {
+    height: 40px;
+    width: 220px;
+    border-radius: 10px;
+    background: #eee;
+  }
+}
