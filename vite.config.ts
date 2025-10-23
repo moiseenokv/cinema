@@ -1,10 +1,19 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'node:path';
+import { visualizer } from 'rollup-plugin-visualizer';
 
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [react()],
+
+export default defineConfig(({ mode }) => ({
+  plugins: [
+    react(),
+    visualizer({
+          filename: 'dist/stats.html',
+          gzipSize: true,
+          brotliSize: true,
+          open: false,
+        }),
+  ],
   server: {
     proxy: {
       '/api': {
@@ -24,5 +33,32 @@ export default defineConfig({
       '@entities': path.resolve(__dirname, 'src/entities'),
       '@shared': path.resolve(__dirname, 'src/shared')
     }
-  }
-});
+  },
+  esbuild: {
+    drop: mode === 'production' ? ['console', 'debugger'] : [],
+  },
+  build: {
+    target: 'es2020',
+    sourcemap: false,
+    cssCodeSplit: true,
+    chunkSizeWarningLimit: 900,
+    rollupOptions: {
+      output: {
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash][extname]',
+
+        manualChunks(id) {
+          if (!id.includes('node_modules')) return;
+
+          if (id.includes('react-router')) return 'vendor-router';
+          if (id.includes('/react/') || id.includes('/react-dom/')) return 'vendor-react';
+          if (id.includes('/formik/') || id.includes('/yup/')) return 'vendor-forms';
+          if (id.includes('/axios/') || id.includes('/js-cookie/')) return 'vendor-net';
+
+          return 'vendor';
+        },
+      },
+    },
+  },
+}));
