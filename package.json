@@ -7,10 +7,26 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "lint:staged": "lint-staged",
+    "format": "prettier . --write",
+    "typecheck": "tsc -b --noEmit",
     "preview": "vite preview",
     "test": "vitest",
     "test:watch": "vitest --watch",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "test:run": "vitest --run",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx,js,jsx}": [
+      "eslint --cache --max-warnings=0 --fix"
+    ],
+    "**/*.{scss,css,md,html,json,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "engines": {
+    "node": ">=22 <23"
   },
   "dependencies": {
     "axios": "^1.12.2",
@@ -40,8 +56,11 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.4.0",
+    "husky": "^9.1.7",
     "jsdom": "^27.0.1",
+    "lint-staged": "^16.2.6",
     "msw": "^2.11.6",
+    "prettier": "^3.6.2",
     "sass": "^1.93.2",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.46.1",
