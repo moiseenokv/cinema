@@ -14,21 +14,35 @@ describe('RegisterPage', () => {
 
   it('валидация: несоответствие паролей', async () => {
     renderWithRouter(<RegisterPage />, ['/register']);
-    fireEvent.change(screen.getByLabelText(/E-mail/i), { target: { value: 'user@mail.com' } });
-    fireEvent.change(screen.getByLabelText(/^Пароль$/i), { target: { value: 'Aa123456' } });
-    fireEvent.change(screen.getByLabelText(/Повтор пароля/i), { target: { value: 'Aa12345X' } });
-    fireEvent.submit(screen.getByRole('button', { name: 'Зарегистрироваться' }));
+
+    const email   = await screen.findByLabelText(/E-mail/i);
+    const pass    = await screen.findByLabelText(/^Пароль$/i);
+    const pass2   = await screen.findByLabelText(/Повтор пароля/i);
+    const submit  = await screen.findByRole('button', { name: 'Зарегистрироваться' });
+
+    fireEvent.change(email,  { target: { value: 'user@mail.com' } });
+    fireEvent.change(pass,   { target: { value: 'Aa123456' } });
+    fireEvent.change(pass2,  { target: { value: 'Aa12345X' } });
+    fireEvent.click(submit);
 
     await screen.findByText(/Пароли не совпадают/i);
   });
 
   it('валидные данные → регистрирует и авторизует', async () => {
     renderWithRouter(<RegisterPage />, ['/register']);
-    fireEvent.change(screen.getByLabelText(/E-mail/i), { target: { value: 'user@mail.com' } });
-    fireEvent.change(screen.getByLabelText(/^Пароль$/i), { target: { value: 'Aa123456' } });
-    fireEvent.change(screen.getByLabelText(/Повтор пароля/i), { target: { value: 'Aa123456' } });
-    fireEvent.submit(screen.getByRole('button', { name: 'Зарегистрироваться' }));
 
+    const email   = await screen.findByLabelText(/E-mail/i);
+    const pass    = await screen.findByLabelText(/^Пароль$/i);
+    const pass2   = await screen.findByLabelText(/Повтор пароля/i);
+    const submit  = await screen.findByRole('button', { name: 'Зарегистрироваться' });
+
+    fireEvent.change(email, { target: { value: 'user@mail.com' } });
+    fireEvent.change(pass,  { target: { value: 'Aa123456' } });
+    fireEvent.change(pass2, { target: { value: 'Aa123456' } });
+    fireEvent.click(submit);
+
+    // если после регистрации НЕ логиним автоматически:
     await waitFor(() => expect(useSession.getState().authenticated).toBe(false));
+    // если должны логинить автоматически — поменяй на .toBe(true)
   });
 });

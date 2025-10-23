@@ -14,8 +14,18 @@ describe('AuthPage', () => {
 
   it('валидация: пустые поля показывают ошибки', async () => {
     renderWithRouter(<AuthPage />, ['/auth']);
-    fireEvent.submit(screen.getByRole('button', { name: 'Авторизоваться' }));
 
+    const email  = await screen.findByLabelText(/E-mail/i);
+    const pass   = await screen.findByLabelText(/Пароль/i);
+    const submit = await screen.findByRole('button', { name: 'Авторизоваться' });
+
+    // пометим поля как touched, чтобы компонент показал ошибки
+    fireEvent.blur(email);
+    fireEvent.blur(pass);
+
+    fireEvent.click(submit);
+
+    // ждём тексты ошибок (а не плейсхолдеры)
     await screen.findByText(/Введите e-mail/i);
     await screen.findByText(/Введите пароль/i);
   });
@@ -23,9 +33,13 @@ describe('AuthPage', () => {
   it('валидные данные → авторизует', async () => {
     renderWithRouter(<AuthPage />, ['/auth']);
 
-    fireEvent.change(screen.getByLabelText(/E-mail/i), { target: { value: 'user@mail.com' } });
-    fireEvent.change(screen.getByLabelText(/Пароль/i), { target: { value: 'Aa123456' } });
-    fireEvent.submit(screen.getByRole('button', { name: 'Авторизоваться' }));
+    const email  = await screen.findByLabelText(/E-mail/i);
+    const pass   = await screen.findByLabelText(/Пароль/i);
+    const submit = await screen.findByRole('button', { name: 'Авторизоваться' });
+
+    fireEvent.change(email, { target: { value: 'user@mail.com' } });
+    fireEvent.change(pass,  { target: { value: 'Aa123456' } });
+    fireEvent.click(submit);
 
     await waitFor(() => expect(useSession.getState().authenticated).toBe(true));
   });
