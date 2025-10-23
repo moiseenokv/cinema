@@ -6,15 +6,15 @@ import { TextField } from '@/shared/ui/fields/TextField/TextField';
 import { FormActions } from '@/shared/ui/forms/FormActions/FormActions';
 import { useSession } from '@/app/session/useSession';
 import styles from '../AuthPage.module.scss';
+import { routes } from '@/app/router/config';
+import { Link } from 'react-router-dom';
 
 const schema = Yup.object({
   email: emailSchema,
   password: passwordSchema,
 });
 
-type Props = { hint?: React.ReactNode };
-
-export default function AuthForm({ hint }: Props) {
+export default function AuthForm() {
   const { login } = useSession();
 
   const {
@@ -68,7 +68,14 @@ export default function AuthForm({ hint }: Props) {
         submitLabel="Авторизоваться"
         loading={isSubmitting}
         disabled={!isValid || !dirty}
-        hint={hint}
+        hint={
+          <span>Нет аккаунта? 
+            <Link 
+              to={routes.register}
+              >Зарегистрируйтесь
+            </Link>
+          </span>
+        }
       />
     </form>
   );

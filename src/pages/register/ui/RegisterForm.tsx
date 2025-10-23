@@ -8,7 +8,6 @@ import { getErrorMessage } from '@/shared/api/getErrorMessage';
 import { notify } from '@/shared/lib/notify';
 import { routes } from '@/app/router/config';
 import { emailSchema, passwordSchema, confirmPasswordSchema } from '@/shared/lib/validation';
-import { preloadAuthForm } from '@/pages/auth/ui/preloadAuthForm';
 import styles from '../RegisterPage.module.scss';
 
 const schema = Yup.object({
@@ -75,10 +74,8 @@ function RegisterFormImpl() {
         hint={
             <span>Уже есть аккаунт? 
                 <Link 
-                    to={routes.auth} 
-                    onMouseEnter={preloadAuthForm}
-                    onFocus={preloadAuthForm}
-                    onTouchStart={preloadAuthForm}>
+                    to={routes.auth}
+                    >
                     Войти
                 </Link>
             </span>
