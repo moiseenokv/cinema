@@ -1,18 +1,10 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import path from 'node:path';
-import { visualizer } from 'rollup-plugin-visualizer';
 
 
 export default defineConfig(({ mode }) => ({
-  plugins: [
-    react(),
-    visualizer({
-          filename: 'dist/stats.html',
-          gzipSize: true,
-          brotliSize: true,
-          open: false,
-        }),
+  plugins: [react()
   ],
   server: {
     proxy: {
@@ -52,7 +44,7 @@ export default defineConfig(({ mode }) => ({
           if (!id.includes('node_modules')) return;
 
           if (id.includes('react-router')) return 'vendor-router';
-          if (id.includes('/react/') || id.includes('/react-dom/')) return 'vendor-react';
+          // if (id.includes('/react/') || id.includes('/react-dom/')) return 'vendor-react';
           if (id.includes('/formik/') || id.includes('/yup/')) return 'vendor-forms';
           if (id.includes('/axios/') || id.includes('/js-cookie/')) return 'vendor-net';
 
