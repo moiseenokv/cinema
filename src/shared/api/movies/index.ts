@@ -15,9 +15,8 @@ const mapMovie = (dto: MovieDto): Movie => ({
 const mapSession = (dto: MovieSessionDto): MovieSession => ({
   id: dto.id,
   cinemaId: dto.cinemaId,
-  cinemaTitle: dto.cinemaTitle,
-  startAt: new Date(dto.startTime),
-  price: dto.price,
+  movieId: dto.movieId,
+  startAt: dto.startTime,
 });
 
 export async function getMovies(): Promise<Movie[]> {

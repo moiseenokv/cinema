@@ -2,9 +2,10 @@ import { describe, it, expect, beforeEach, afterEach, vi, type Mock } from 'vite
 
 vi.mock('@/shared/api/movies', () => ({
   getMovies: vi.fn(),
+  getMovieSessions: vi.fn(),
 }));
 
-import { getMovies } from '@/shared/api/movies';
+import { getMovies, getMovieSessions } from '@/shared/api/movies';
 import { useMoviesStore, resetMoviesStore } from './useMoviesStore';
 
 const movie1 = {
@@ -24,7 +25,7 @@ const movie2 = {
   shortDescription: 'Dream heist',
 };
 
-describe('useMoviesStore (zustand)', () => {
+describe('useMoviesStore', () => {
   beforeEach(() => {
     resetMoviesStore();
     vi.clearAllMocks();
@@ -36,7 +37,6 @@ describe('useMoviesStore (zustand)', () => {
 
   it('load() успешно наполняет byId и меняет статус на succeeded', async () => {
     (getMovies as unknown as Mock).mockResolvedValueOnce([movie1, movie2]);
-
     await useMoviesStore.getState().load();
 
     const { byId, status, error } = useMoviesStore.getState();
@@ -83,5 +83,44 @@ describe('useMoviesStore (zustand)', () => {
 
     expect(getMovies).not.toHaveBeenCalled();
     expect(useMoviesStore.getState().status).toBe('succeeded');
+  });
+
+  it('loadMovieSessions(movieId): success и кэш', async () => {
+    const s1 = { id: 101, movieId: 1, cinemaId: 2, startAt: '2025-10-22T08:00:00.000Z' };
+    const s2 = { id: 102, movieId: 1, cinemaId: 3, startAt: '2025-10-22T10:00:00.000Z' };
+
+    (getMovieSessions as unknown as Mock).mockResolvedValueOnce([s1, s2]);
+
+    await useMoviesStore.getState().loadMovieSessions(1);
+    expect(getMovieSessions).toHaveBeenCalledTimes(1);
+    expect(useMoviesStore.getState().sessionsByMovieId[1]).toEqual([s1, s2]);
+    expect(useMoviesStore.getState().sessionsStatus[1]).toBe('succeeded');
+
+    // повторный вызов не должен дёргать API
+    await useMoviesStore.getState().loadMovieSessions(1);
+    expect(getMovieSessions).toHaveBeenCalledTimes(1);
+  });
+
+  it('loadMovieSessions(movieId): идемпотентность при параллельных вызовах', async () => {
+    const s = { id: 201, movieId: 2, cinemaId: 5, startAt: '2025-10-23T09:00:00.000Z' };
+    (getMovieSessions as unknown as Mock).mockResolvedValueOnce([s]);
+
+    await Promise.all([
+      useMoviesStore.getState().loadMovieSessions(2),
+      useMoviesStore.getState().loadMovieSessions(2),
+    ]);
+
+    expect(getMovieSessions).toHaveBeenCalledTimes(1);
+    expect(useMoviesStore.getState().sessionsByMovieId[2]).toEqual([s]);
+    expect(useMoviesStore.getState().sessionsStatus[2]).toBe('succeeded');
+  });
+
+  it('loadMovieSessions(movieId): ошибка переводит статус в error и пишет message', async () => {
+    (getMovieSessions as unknown as Mock).mockRejectedValueOnce(new Error('boom'));
+
+    await useMoviesStore.getState().loadMovieSessions(1);
+
+    expect(useMoviesStore.getState().sessionsStatus[1]).toBe('error');
+    expect(useMoviesStore.getState().sessionsError[1]).toBeTruthy();
   });
 });
