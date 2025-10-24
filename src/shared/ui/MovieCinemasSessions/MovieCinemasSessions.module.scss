@@ -1,0 +1,87 @@
+.list {
+  display: grid;
+  gap: 16px;
+}
+
+.skeleton,
+.empty {
+  color: #5c667a;
+}
+
+.card {
+  padding: 12px 0;
+  border-bottom: 1px solid #e9edf5;
+  display: grid;
+  gap: 10px;
+}
+
+.header {
+  .titleRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .icon {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #1b2452;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 4px;
+      border-radius: 50%;
+      background: #ffd166;
+    }
+  }
+
+  .name {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 800;
+    color: #1b2452;
+  }
+
+  .badge {
+    padding: 2px 8px;
+    font-size: 12px;
+    border: 1px solid #1b2452;
+    border-radius: 6px;
+    color: #1b2452;
+    background: #f4f6ff;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  .address {
+    margin-top: 4px;
+    color: #5c667a;
+    font-size: 13px;
+  }
+}
+
+.times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.timeBtn {
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid #a7b0c5;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  transition:
+    transform 0.04s ease,
+    box-shadow 0.12s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 1px 6px rgba(27, 36, 82, 0.12);
+  }
+}

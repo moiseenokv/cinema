@@ -1,0 +1,52 @@
+.info {
+  align-self: start;
+  display: grid;
+  gap: 10px;
+}
+
+.posterWrap {
+  width: 180px;
+  height: 260px;
+}
+
+.poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 1px 10px rgba(27, 36, 82, 0.15);
+}
+
+.posterStub {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: linear-gradient(120deg, #e8ecf5, #f4f6ff);
+  border: 1px solid #dfe5f3;
+}
+
+.title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 800;
+  color: #1b2452;
+}
+
+.meta {
+  font-size: 13px;
+  color: #5c667a;
+}
+
+.desc {
+  color: #2d3250;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.error {
+  color: tomato;
+}
+
+.skeleton {
+  color: #5c667a;
+}
