@@ -7,7 +7,7 @@ export function renderWithRouter(ui: ReactNode, initialEntries: string[] = ['/']
   return render(<MemoryRouter initialEntries={initialEntries}>{ui}</MemoryRouter>);
 }
 
-export function renderWithRouterHistory(ui: React.ReactElement, initialEntries: string[] = ['/']) {
+export function renderWithRouterHistory(initialEntries: string[] = ['/']) {
   const router = createMemoryRouter(getRoutes(), { initialEntries });
 
   const utils = render(
