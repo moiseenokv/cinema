@@ -1,0 +1,13 @@
+.page {
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+}
+.left {
+  align-self: start;
+}
+.right {
+  display: grid;
+  gap: 16px;
+}
