@@ -1,0 +1,99 @@
+.root {
+  display: grid;
+  grid-template-columns: 84px 1fr auto;
+  gap: 16px;
+  align-items: center;
+  padding: 16px 16px 24px 16px;
+  width: 760px;
+  border-bottom: 1px solid #bdc5d4;
+
+  & + .root {
+    margin-top: 12px;
+  }
+
+  .thumb {
+    width: 84px;
+    height: 112px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #1f232b;
+
+    .img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  }
+
+  .body {
+    display: grid;
+    gap: 6px;
+
+    .title {
+      font-weight: 600;
+      font-size: 22px;
+      line-height: 1.25;
+    }
+
+    .meta {
+      font-size: 16px;
+      opacity: 0.8;
+
+      .dot {
+        margin: 0 6px;
+      }
+    }
+
+    .sub {
+      font-size: 12px;
+      opacity: 0.7;
+    }
+  }
+
+  .right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .badge {
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      line-height: 1;
+      user-select: none;
+
+      &.primary {
+        background: #2563eb;
+        color: #fff;
+      }
+      &.success {
+        background: #22c55e;
+        color: #071e0f;
+      }
+      &.danger {
+        background: #ef4444;
+        color: #fff;
+      }
+      &.muted {
+        background: #2a2f3a;
+        color: #cbd5e1;
+      }
+    }
+
+    .linkButton {
+      border: 0;
+      color: #dadfe8;
+      background-color: #118eea;
+      cursor: pointer;
+      padding: 6px 0;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 10px 28px;
+      border-radius: 4px;
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+}

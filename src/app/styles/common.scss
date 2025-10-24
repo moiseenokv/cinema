@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap');
 
-:root { 
+:root {
   --bg: #fbfcff;
   --text: #0b1220;
   --muted: #9aa4b2;
@@ -8,22 +8,30 @@
   --danger: #e23a3a;
   --radius: 10px;
   --border-color: #e5e7eb;
-  --btn-bg-primary: #1A2C50;
-  --btn-color-primary: #F2C46F;
+  --btn-bg-primary: #1a2c50;
+  --btn-color-primary: #f2c46f;
 }
 
 body {
-    font: 16px/1.4 'Roboto', sans-serif;
-    min-height: 100vh;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  font:
+    16px/1.4 'Roboto',
+    sans-serif;
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #root {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  h1 {
+    text-align: center;
+    font-size: 24px;
+    margin: 24px;
+  }
 }

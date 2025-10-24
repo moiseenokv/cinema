@@ -9,10 +9,11 @@ export default defineConfig(({ mode }) => ({
   server: {
     proxy: {
       '/api': {
-        target: process.env.VITE_API_URL ?? 'http://localhost:3022',
+        target: process.env.VITE_API_ORIGIN ?? 'http://localhost:3022',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
+      '/static': { target: 'http://localhost:3022', changeOrigin: true }
     },
   },
   resolve: {
