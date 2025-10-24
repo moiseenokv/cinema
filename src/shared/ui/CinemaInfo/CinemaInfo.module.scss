@@ -1,0 +1,31 @@
+.info {
+  align-self: start;
+}
+.title {
+  margin: 0 0 8px;
+  font-size: 22px;
+  font-weight: 800;
+  color: #1b2452;
+}
+.address {
+  color: #5c667a;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.network {
+  display: inline-block;
+  font-size: 12px;
+  padding: 2px 8px;
+  border: 1px solid #1b2452;
+  border-radius: 6px;
+  color: #1b2452;
+  background: #f4f6ff;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.error {
+  color: tomato;
+}
+.skeleton {
+  color: #5c667a;
+}

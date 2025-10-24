@@ -1,0 +1,77 @@
+.list {
+  display: grid;
+  gap: 16px;
+}
+.skeleton,
+.empty {
+  color: #5c667a;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid #e9edf5;
+}
+.posterWrap {
+  width: 110px;
+  height: 160px;
+}
+.poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 1px 10px rgba(27, 36, 82, 0.15);
+}
+.posterStub {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: linear-gradient(120deg, #e8ecf5, #f4f6ff);
+  border: 1px solid #dfe5f3;
+}
+
+.content {
+  display: grid;
+  gap: 6px;
+}
+.name {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: #1b2452;
+}
+.meta {
+  font-size: 13px;
+  color: #5c667a;
+}
+.desc {
+  margin: 6px 0 4px;
+  color: #2d3250;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.times {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+.timeBtn {
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid #a7b0c5;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  transition:
+    transform 0.04s ease,
+    box-shadow 0.12s ease;
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 1px 6px rgba(27, 36, 82, 0.12);
+  }
+}
