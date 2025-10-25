@@ -1,6 +1,8 @@
 export function toSeatIdHuman(rowNumber: number, seatNumber: number) {
-  const letter = String.fromCharCode(64 + Number(rowNumber)); // 1->A
-  return `${letter}${Number(seatNumber)}`;
+  const rn = Number.isFinite(rowNumber) ? Math.max(1, Math.trunc(rowNumber)) : 1;
+  const sn = Number.isFinite(seatNumber) ? Math.max(1, Math.trunc(seatNumber)) : 1;
+  const letter = String.fromCharCode(64 + rn);
+  return `${letter}${sn}`;
 }
 
 export const parseSeatId = (id: string) => {
@@ -23,5 +25,5 @@ export const fromApiSeat = (x: { rowNumber: number; seatNumber: number }) => {
   const r = Number(x?.rowNumber ?? 0);
   const c = Number(x?.seatNumber ?? 0);
   if (r <= 0 || c <= 0) return null;
-  return toSeatIdHuman(r - 1, c - 1);
+  return toSeatIdHuman(r, c);
 };
