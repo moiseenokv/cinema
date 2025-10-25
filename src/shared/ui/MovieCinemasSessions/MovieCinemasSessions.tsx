@@ -1,5 +1,6 @@
 import { memo, useState } from 'react';
 import styles from './MovieCinemasSessions.module.scss';
+import { formatShortDateTime } from '@/shared/lib/date';
 
 type Cinema = {
   id: number;
@@ -10,13 +11,9 @@ type Cinema = {
 
 type Session = {
   id: number;
-  startAt: string; // ISO
+  startAt: string;
   format?: string;
 };
-
-const hhmm = (iso: string) =>
-  new Date(iso).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
 const isPast = (iso: string) => new Date(iso).getTime() <= Date.now();
 
 type ItemProps = {
@@ -64,7 +61,7 @@ const Item = memo(function Item({
                     onChange={() => setSelected(s.id)}
                   />
                   <span className={styles.badgeTime} title={s.format}>
-                    {hhmm(s.startAt)}
+                    {formatShortDateTime(s.startAt)}
                   </span>
                 </label>
               );
@@ -97,11 +94,7 @@ type Props = {
   items: Array<{ cinema?: Cinema; sessions: Session[] }>;
   loading?: boolean;
   empty?: boolean;
-
-  // прокидывается в каждый Item
   onPickTime?: (id: number) => void;
-
-  // новый режим
   selectMode?: boolean;
   ctaText?: string;
   onGo?: (sessionId: number) => void;

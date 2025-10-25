@@ -9,7 +9,7 @@ export function CinemasPage() {
 
   useEffect(() => {
     const { status, load } = useCinemasStore.getState();
-    if (status !== 'loading' && status !== 'succeeded') void load();
+    if (status !== 'loading' && status !== 'succeeded') load();
   }, []);
 
   const cinemas = useMemo(() => Object.values(byId), [byId]);

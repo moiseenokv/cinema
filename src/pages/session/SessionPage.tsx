@@ -12,7 +12,7 @@ import { cinemasSelectors } from '@/shared/model/cinemas/selectors';
 import { SessionHeader } from '@/widgets/session-header/SessionHeader';
 import { SeatMap } from '@/shared/ui/SeatMap/SeatMap';
 import { SessionActions } from '@/widgets/session-actions/SessionActions';
-
+import { formatFullDateTime } from '@/shared/lib/date';
 import { notify } from '@/shared/lib/notify';
 import styles from './SessionPage.module.scss';
 
@@ -65,7 +65,7 @@ export function SessionPage() {
     const cinemaName = cinema?.name ?? 'Кинотеатр';
     const cinemaAddr = cinema?.address ?? '—';
     const startHuman = session
-        ? new Date(session.startAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        ? formatFullDateTime(session.startAt)
         : '—';
 
     const onClear = () => {
@@ -97,7 +97,6 @@ export function SessionPage() {
     } else if (error) {
         content = <div className={`${styles.state} ${styles.error}`}>{error}</div>;
     } else if (!session && status === 'succeeded') {
-        // валидный id, но API не нашёл — уводим на /404
         content = <Navigate to={routes.notFound} replace />;
     } else if (!session) {
         content = <div className={styles.state}>Подготовка данных…</div>;

@@ -18,7 +18,7 @@ export function CinemaPage() {
 
   useEffect(() => {
     const c = useCinemasStore.getState();
-    if (c.status !== 'loading' && c.status !== 'succeeded') void c.load();
+    if (c.status !== 'loading' && c.status !== 'succeeded') c.load();
 
     useCinemasStore.getState().ensureLoaded();
     useCinemasStore.getState().loadSessions(cinemaId);

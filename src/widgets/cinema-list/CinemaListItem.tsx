@@ -20,7 +20,7 @@ export const CinemaListItem = memo(function CinemaListItem({ cinema }: Props) {
 
   useEffect(() => {
     const st = useCinemasStore.getState();
-    void st.loadSessions(cinema.id);
+    st.loadSessions(cinema.id);
   }, [cinema.id]);
 
   if (error) return <div style={{ color: 'tomato' }}>{error}</div>;
@@ -32,7 +32,6 @@ export const CinemaListItem = memo(function CinemaListItem({ cinema }: Props) {
       sessions={sessions}
       onViewSessions={() => {
         navigate(routes.cinema(cinema.id));
-        console.log('Pick session', cinema.id);
       }}
     />
   );

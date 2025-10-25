@@ -1,4 +1,3 @@
-// src/pages/films/FilmsPage.tsx
 import { useEffect, useMemo, useRef } from 'react';
 import { MoviesList } from '@widgets/movies-list/MoviesList';
 import { useMoviesStore } from '@shared/model/movies/useMoviesStore';
@@ -15,7 +14,7 @@ export function FilmsPage() {
     if (didInit.current) return;
     didInit.current = true;
     const st = useMoviesStore.getState();
-    if (st.status === 'idle') void st.load();
+    if (st.status === 'idle') st.load();
   }, []);
 
   return (

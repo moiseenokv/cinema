@@ -1,5 +1,6 @@
 import { useId, useState, memo } from 'react';
 import styles from './CinemaMoviesSessions.module.scss';
+import { formatShortDateTime } from '@/shared/lib/date';
 
 type Movie = {
   id: number;
@@ -12,13 +13,10 @@ type Movie = {
 };
 type Session = { id: number; startAt: string; format?: string };
 
-const hhmm = (iso: string) =>
-  new Date(iso).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
 const isPast = (iso: string) => new Date(iso).getTime() <= Date.now();
 
 
-type ItemProps = {
+type CinemaMovieSessionItemType = {
   movie?: Movie;
   sessions: Session[];
   selectMode?: boolean;
@@ -26,12 +24,12 @@ type ItemProps = {
   onGo?: (sessionId: number) => void;
 };
 
-const Item = memo(function Item({
+const CinemaMovieSessionItem = memo(function Item({
   movie,
   sessions,
   ctaText = 'Перейти к бронированию',
   onGo,
-}: ItemProps) {
+}: CinemaMovieSessionItemType) {
   const title = movie?.title ?? 'Фильм';
   const meta = [
     movie?.releaseYear && `${movie.releaseYear}`,
@@ -77,7 +75,7 @@ const Item = memo(function Item({
                       onChange={() => setSelected(s.id)}
                     />
                     <span className={styles.badgeTime} title={s.format}>
-                      {hhmm(s.startAt)}
+                      {formatShortDateTime(s.startAt)}
                     </span>
                   </label>
                 );
@@ -110,7 +108,7 @@ const Item = memo(function Item({
   );
 });
 
-type Props = {
+type CinemaMoviesSessionsType = {
   items: Array<{ movie?: Movie; sessions: Session[] }>;
   loading?: boolean;
   empty?: boolean;
@@ -124,14 +122,14 @@ export function CinemaMoviesSessions({
   empty,
   ctaText,
   onGo,
-}: Props) {
+}: CinemaMoviesSessionsType) {
   if (loading) return <div className={styles.skeleton}>Загрузка сеансов…</div>;
   if (empty) return <div className={styles.empty}>Нет ближайших сеансов</div>;
 
   return (
     <section className={styles.list}>
       {items.map(({ movie, sessions }) => (
-        <Item
+        <CinemaMovieSessionItem
           key={(movie?.id ?? sessions[0]?.id) as number}
           movie={movie}
           sessions={sessions}
