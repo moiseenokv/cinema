@@ -1,73 +1,109 @@
-# React + TypeScript + Vite
+# Запуск проекта
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Требования к среде
 
-Currently, two official plugins are available:
+- **Node.js**: `>=22 <23`
+- **npm**: идёт вместе с Node 22
+- ОС: macOS / Linux / Windows
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 1) Клиент (Vite + React)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 1.1 Создать файл окружения
 
-## Expanding the ESLint configuration
+В корне клиентского проекта создайте файл **`.env`** со строкой:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```env
+VITE_API_ORIGIN=http://localhost:3022
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+> При необходимости можно указать свой адрес API.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### 1.2 Установка зависимостей
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Из ветки **`main`**:
+
+```bash
+npm install
 ```
+
+### 1.3 Сборка и превью (production-like)
+
+```bash
+npm run build
+npm run preview
+```
+
+Откройте в браузере: **http://localhost:4173/**
+
+### (Опционально) Режим разработки
+
+```bash
+npm run dev
+```
+
+Обычно откроется **http://localhost:5173/**
+
+---
+
+## 2) Сервер (API)
+
+Склонируйте и запустите тестовый сервер:
+
+```bash
+git clone https://github.com/maxbit-solution/frontend_technical_task
+cd frontend_technical_task
+npm install
+npm run start
+```
+
+По умолчанию сервер поднимется на **http://localhost:3022**.
+
+---
+
+## 3) Тесты
+
+В клиентском проекте:
+
+```bash
+npm run test
+```
+
+- Используется **Vitest** (+ Testing Library).
+- Тесты ищутся по `*.test.ts` / `*.test.tsx`.
+
+---
+
+## Полезные заметки
+
+- Переменные окружения клиента начинаются с `VITE_…`. В данном проекте используется:
+  - `VITE_API_ORIGIN` — базовый URL API (например, `http://localhost:3022`).
+- Если **сервер** поднят не на `http://localhost:3022`, обновите значение в `.env` и перезапустите клиент.
+- Для корректной работы защищённых эндпоинтов потребуется авторизация (JWT). В интерфейсе предусмотрены страницы регистрации/логина.
+- При ошибках CORS убедитесь, что сервер отвечает с корректными заголовками и что `VITE_API_ORIGIN` указывает на актуальный домен/порт.
+
+---
+
+## Краткий чек-лист запуска
+
+1. Поднять **сервер**:
+   ```bash
+   git clone https://github.com/maxbit-solution/frontend_technical_task
+   cd frontend_technical_task
+   npm install
+   npm run start
+   ```
+2. Подготовить **клиент**:
+   ```bash
+   # в корне клиента
+   echo "VITE_API_ORIGIN=http://localhost:3022" > .env
+   npm install
+   npm run build
+   npm run preview
+   ```
+3. Открыть **http://localhost:4173/** в браузере.
+4. Запустить **тесты** (по желанию):
+   ```bash
+   npm run test
+   ```
