@@ -1,57 +1,66 @@
+// src/shared/model/cinemas/selectors.ts
 import { useEffect, useMemo } from 'react';
 import { useCinemasStore } from './useCinemasStore';
 import type { CinemaSession } from '@/shared/api/cinemas/types';
 
-const EMPTY: ReadonlyArray<unknown> = Object.freeze([]);
+type Status = 'idle' | 'loading' | 'succeeded' | 'error';
+
+const EMPTY_SESSIONS: ReadonlyArray<CinemaSession> = Object.freeze([]);
+// const EMPTY_BY_ID: Readonly<Record<number, Cinema>> = Object.freeze({} as Record<number, Cinema>);
 
 export const cinemasSelectors = {
-  useById: (id: number) => useCinemasStore(s => s.byId[id]),
-  useStatus: () => useCinemasStore(s => s.status),
-  useError:  () => useCinemasStore(s => s.error),
-
+  // простые слайсы
+  useById:   (id: number) => useCinemasStore(s => s.byId[id]),
   useByIdMap: () => useCinemasStore(s => s.byId),
+  useStatus:  () => useCinemasStore(s => s.status as Status),
+  useError:   () => useCinemasStore(s => s.error),
 
+  // автозагрузка — хуки всегда вызываются, ранних return нет
   useByIdMapAuto: () => {
     const byId   = useCinemasStore(s => s.byId);
-    const status = useCinemasStore(s => s.status);
+    const status = useCinemasStore(s => s.status as Status);
+
     useEffect(() => {
       if (status === 'idle' && Object.keys(byId).length === 0) {
         useCinemasStore.getState().ensureLoaded();
       }
     }, [status, byId]);
+
     return byId;
   },
 
+  // список сеансов по кинотеатру
   useSessionsByCinemaId: (cinemaId: number) =>
-    (useCinemasStore(s => s.sessionsByCinemaId[cinemaId]) ?? EMPTY) as any[],
+    (useCinemasStore(s => s.sessionsByCinemaId[cinemaId]) ?? EMPTY_SESSIONS),
 
+  // сгруппировано по фильму для страницы кинотеатра
   useSessionsGroupedByMovie: (cinemaId: number) => {
     const sessions = cinemasSelectors.useSessionsByCinemaId(cinemaId);
     return useMemo(() => {
-      const map = new Map<number, any[]>();
+      const map = new Map<number, CinemaSession[]>();
       for (const s of sessions) {
-        const movieId = (s as any).movieId as number;
-        const arr = map.get(movieId) ?? [];
+        const arr = map.get(s.movieId) ?? [];
         arr.push(s);
-        map.set(movieId, arr);
+        map.set(s.movieId, arr);
       }
-      for (const [, list] of map) {
-        list.sort((a, b) => +new Date(a.startAt) - +new Date(b.startAt));
+      for (const [, arr] of map) {
+        arr.sort((a, b) => +new Date(a.startAt) - +new Date(b.startAt));
       }
-      return map; // Map<movieId, sessions[]>
+      return map; // Map<movieId, CinemaSession[]>
     }, [sessions]);
   },
 };
 
+// хелпер без хуков — удобно в тестах
 export function groupSessionsByMovie(sessions: CinemaSession[]) {
   const map = new Map<number, CinemaSession[]>();
   for (const s of sessions) {
-    const list = map.get(s.movieId) ?? [];
-    list.push(s);
-    map.set(s.movieId, list);
+    const arr = map.get(s.movieId) ?? [];
+    arr.push(s);
+    map.set(s.movieId, arr);
   }
-  for (const [, list] of map) {
-    list.sort((a, b) => +new Date(a.startAt) - +new Date(b.startAt));
+  for (const [, arr] of map) {
+    arr.sort((a, b) => +new Date(a.startAt) - +new Date(b.startAt));
   }
   return map;
 }

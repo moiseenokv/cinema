@@ -1,5 +1,5 @@
 export type MovieSessionCore = {
-  id: number;           // movieSessionId
+  id: number; 
   movieId: number;
   cinemaId: number;
   cinemaTitle: string;

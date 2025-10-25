@@ -1,0 +1,72 @@
+.container {
+  display: grid;
+  gap: 16px;
+
+  .grid {
+    display: grid;
+    gap: 12px;
+    justify-content: start;
+  }
+
+  .seat {
+    width: 56px;
+    height: 40px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    background: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:hover {
+      border-color: rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  .seatBooked {
+    background: #0e1a2b;
+    color: #fff;
+    border-color: transparent;
+    cursor: not-allowed;
+  }
+  .seatSelected {
+    background: #1a66ff;
+    color: #fff;
+    border-color: transparent;
+  }
+  .seatDisabled {
+    opacity: 0.6;
+  }
+
+  .legend {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    color: #667085;
+    font-size: 12px;
+
+    .legendDot {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      margin-right: 6px;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+    }
+    .legendFree {
+      background: #fff;
+    }
+    .legendSelected {
+      background: #1a66ff;
+      border-color: transparent;
+    }
+    .legendBooked {
+      background: #0e1a2b;
+      border-color: transparent;
+    }
+  }
+}

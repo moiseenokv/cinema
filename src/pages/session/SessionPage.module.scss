@@ -1,0 +1,18 @@
+.page {
+  padding: 16px;
+  display: grid;
+  gap: 24px;
+
+  .seatArea {
+    display: grid;
+    gap: 16px;
+  }
+}
+
+.state {
+  padding: 16px;
+
+  &.error {
+    color: tomato;
+  }
+}

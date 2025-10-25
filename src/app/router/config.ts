@@ -7,6 +7,7 @@ export const routes = {
   myTickets: '/my-tickets',
   auth: '/auth',
   register: '/register',
+  session: (id?: string | number) => (id ? `/session/${id}` : '/session/:id'),
   notFound: '/404',
   wildcard: '*',
 } as const;

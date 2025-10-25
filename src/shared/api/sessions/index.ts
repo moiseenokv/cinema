@@ -2,11 +2,19 @@ import { http } from '@shared/api/http';
 import type { MovieSessionCore, SessionDetails } from './types';
 
 type MovieSessionsByMovieDto = {
-  id: number; cinemaId: number; cinemaTitle: string; startTime: string; price?: number;
+  id: number; 
+  cinemaId: number; 
+  cinemaTitle: string; 
+  startTime: string; 
+  price?: number;
 }[];
 
 type MovieSessionsByCinemaDto = {
-  id: number; movieId: number; movieTitle: string; startTime: string; price?: number;
+  id: number; 
+  movieId: number; 
+  movieTitle: string; 
+  startTime: string; 
+  price?: number;
 }[];
 
 export async function fetchSessionsByMovie(movieId: number): Promise<MovieSessionCore[]> {
