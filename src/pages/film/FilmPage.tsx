@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams, Navigate, useNavigate } from 'react-router-dom';
 
 import { useMoviesStore } from '@/shared/model/movies/useMoviesStore';
 import { moviesSelectors } from '@/shared/model/movies/selectors';
@@ -13,6 +13,7 @@ import { routes } from '@/app/router/config';
 
 export function FilmPage() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const movieId = Number(id);
   if (!Number.isFinite(movieId)) return <Navigate to="/films" replace />;
 
@@ -62,10 +63,7 @@ export function FilmPage() {
           items={items}
           loading={items.length === 0 && (mStatus === 'idle' || mStatus === 'loading')}
           empty={mStatus === 'succeeded' && items.length === 0}
-          onPickTime={(sessionId) => {
-            // TODO: переход к бронированию конкретного сеанса
-            console.log('pick session', sessionId);
-          }}
+          onGo={(sessionId) => navigate(routes.session(String(sessionId)))}
         />
       </div>
     </div>

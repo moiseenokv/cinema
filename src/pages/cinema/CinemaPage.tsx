@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { useParams, Navigate } from 'react-router-dom';
+import { useParams, Navigate, useNavigate } from 'react-router-dom';
 
 import { useCinemasStore } from '@/shared/model/cinemas/useCinemasStore';
 import { cinemasSelectors } from '@/shared/model/cinemas/selectors';
@@ -12,6 +12,7 @@ import { routes } from '@/app/router/config';
 
 export function CinemaPage() {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const cinemaId = Number(id);
   if (!Number.isFinite(cinemaId)) return <Navigate to="/cinemas" replace />;
 
@@ -23,11 +24,11 @@ export function CinemaPage() {
     useCinemasStore.getState().loadSessions(cinemaId);
   }, [cinemaId]);
 
-  const cinema  = cinemasSelectors.useById(cinemaId);
+  const cinema = cinemasSelectors.useById(cinemaId);
   const cStatus = cinemasSelectors.useStatus();
-  const cError  = cinemasSelectors.useError();
+  const cError = cinemasSelectors.useError();
 
-  const grouped    = cinemasSelectors.useSessionsGroupedByMovie(cinemaId);
+  const grouped = cinemasSelectors.useSessionsGroupedByMovie(cinemaId);
   const moviesById = useByIdMapAuto();
 
   const items = useMemo(() => {
@@ -38,7 +39,7 @@ export function CinemaPage() {
     }));
   }, [grouped, moviesById]);
 
-    if (cStatus === 'succeeded' && !cinema) {
+  if (cStatus === 'succeeded' && !cinema) {
     return <Navigate to={routes.notFound} replace />;
   }
 
@@ -59,10 +60,7 @@ export function CinemaPage() {
           items={items}
           loading={items.length === 0 && (cStatus === 'idle' || cStatus === 'loading')}
           empty={cStatus === 'succeeded' && items.length === 0}
-         /*  onPickTime={(sessionId) => {
-            // TODO: переход на бронирование конкретной сессии
-            console.log('pick session', sessionId);
-          }} */
+          onGo={(sessionId) => navigate(routes.session(String(sessionId)))}
         />
       </div>
     </div>
